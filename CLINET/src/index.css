@@ -1,0 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Bad+Script&family=Caveat:wght@400..700&family=Dancing+Script:wght@400..700&family=Orbitron:wght@400..900&family=Outfit:wght@100..900&family=Updock&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*{
+  font-family: "Outfit", sans-serif;
+  size: 30px;
+}
