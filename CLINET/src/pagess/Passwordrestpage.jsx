@@ -74,38 +74,71 @@ const PasswordResetPage = () => {
     setIsOtpSubmitted(true);
   };
 
-  const onSubmitNewPassword = async (e) => {
+  // const onSubmitNewPassword = async (e) => {
+  //   e.preventDefault();
+  //   if (!newPassword) {
+  //     toast.error('New Password is required');
+  //     return;
+  //   }
+  //   if (!otp || otp.length !== 6) {
+  //     toast.error('OTP is required and must be 6 digits');
+  //     return;
+  //   }
+  //   if (!email) {
+  //     toast.error('Email is required');
+  //     return;
+  //   }
+
+  //   try {
+  //     const { data } = await axios.post(`${backendurl}/api/auth/reset-password`, {
+  //       email,
+  //       otp,
+  //       newPassword,
+  //     });
+
+  //     if (data.success) {
+  //       toast.success(data.message);
+  //       navigate('/login');
+  //     } else {
+  //       toast.error(data.message);
+  //     }
+  //   } catch (error) {
+  //     toast.error(error.message);
+  //   }
+  // };
+  const onSubmitnewpassword = async (e) => {
     e.preventDefault();
+    // console.log({ email, otp, newPassword }); // Debugging: Log the values
     if (!newPassword) {
-      toast.error('New Password is required');
-      return;
+        toast.error('New Password is required');
+        return;
     }
     if (!otp || otp.length !== 6) {
-      toast.error('OTP is required and must be 6 digits');
-      return;
+        toast.error('OTP is required and must be 6 digits');
+        return;
     }
     if (!email) {
-      toast.error('Email is required');
-      return;
+        toast.error('Email is required');
+        return;
     }
 
     try {
-      const { data } = await axios.post(`${backendurl}/api/auth/reset-password`, {
-        email,
-        otp,
-        newPassword,
-      });
-
-      if (data.success) {
-        toast.success(data.message);
-        navigate('/login');
-      } else {
-        toast.error(data.message);
-      }
+        const { data } = await axios.post(`${backendurl}/api/auth/reset-password`, {
+            email,
+            otp,
+            newPassword,
+        });
+        if (data.success) {
+            toast.success(data.message);
+            navigate('/login');
+        } else {
+            toast.error(data.message);
+        }
     } catch (error) {
-      toast.error(error.message);
+        toast.error(error.message);
     }
-  };
+};
+
 
   return (
     <div className='flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-200 to-purple-400'>
@@ -144,8 +177,7 @@ const PasswordResetPage = () => {
           <h1 className='text-white text-2xl font-semibold text-center mb-4'>Reset Password OTP</h1>
           <p className='text-center mb-6 text-indigo-300'>Enter the 6-digit code sent to your email id.</p>
           <div className='flex justify-between mb-8' onPaste={handlePaste}>
-            {Array(6)
-              .fill(0)
+            {Array(6).fill(0)
               .map((_, index) => (
                 <input
                   type='text'
@@ -167,7 +199,7 @@ const PasswordResetPage = () => {
 
       {/* New password form */}
       {isOtpSubmitted && isEmailSent && (
-        <form onSubmit={onSubmitNewPassword} className='bg-slate-900 p-8 rounded-lg shadow-lg w-96 text-sm'>
+        <form onSubmit={onSubmitnewpassword} className='bg-slate-900 p-8 rounded-lg shadow-lg w-96 text-sm'>
           <h1 className='text-white text-2xl font-semibold text-center mb-4'>New Password</h1>
           <p className='text-center mb-6 text-indigo-300'>Enter the new password below.</p>
           <div className='mb-4 flex items-center gap-3 w-full px-5 py-2.5 rounded-full bg-[#333A5C]'>
