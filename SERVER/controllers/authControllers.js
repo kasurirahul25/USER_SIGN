@@ -56,8 +56,9 @@ export const login = async (req, res) => {
     try {
         const user = await userModel.findOne({ email });
         if (!user) {
-            return res.json({ success: false, message: 'Invalid Email' });
+            return res.json({ success: false, message: 'User not found' }); // <-- Add return here
         }
+        
         const ismatch = await bcrypt.compare(password, user.password);
         if (!ismatch) {
             return res.json({ success: false, message: "Invalid password" });
@@ -206,8 +207,8 @@ export const sendResetotp = async (req, res)=>{
 
 //Reset user password.
 export const resetpassword = async(req,res)=>{
-    const{email,otp,newpassword} = req.body;
-    if( !email || !otp|| !newpassword){
+    const{email,otp,newPassword} = req.body;
+    if( !email || !otp|| !newPassword){
         return res.json({success:false,message:'email,otp and new password are required'});
     }
     try{
@@ -221,7 +222,7 @@ export const resetpassword = async(req,res)=>{
         if(user.resetotpexpireat <Date.now()){
             return res.json({success:false, message:'OTP Expired'});
         }
-        const hashedPassword = await bcrypt.hash(newpassword,10);
+        const hashedPassword = await bcrypt.hash(newPassword,10);
         user.password = hashedPassword;
         user.resetotp ='';
         user.resetotpexpireat = 0;
@@ -232,5 +233,4 @@ export const resetpassword = async(req,res)=>{
         return res.json({success:false,message:error.message});
 
     }
-
 }
